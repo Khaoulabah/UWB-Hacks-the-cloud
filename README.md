@@ -36,7 +36,7 @@ The project uses several cloud services, with more planned based on the upcoming
 
 **Issues** : the application is not finished yet. And as I said, this hackathon gave me the boost to start and I will finish it afterward.
 
-**Bugs** : no bugs till now. All bugs are fixed. Hopefully no more bugs 😊
+**Bugs** : no bugs till now. All bugs are fixed. Hopefully no more bugs.
 
 **Future work** : The main features for the MVP are working. However, I have big ambitions for this project. Here are some of the features I think of adding:
 

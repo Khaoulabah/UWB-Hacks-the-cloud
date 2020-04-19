@@ -3,32 +3,12 @@ import { Formik, Field, Form } from "formik";
 import { mergeStyleSets } from "@fluentui/react";
 import { GoogleApiWrapper } from "google-maps-react";
 import { GoogleApiConfig } from "../constants";
+import authService from "./api-authorization/AuthorizeService";
 
-function _PlaceForm() {
+function _PlaceForm(props) {
   return (
     <Formik
-      initialValues={{
-        name: "Khaoula's Store",
-        type: "groceryStore",
-        address: "13700 NE 99TH ST, Issaquah, WA 99401",
-        coordinates: {},
-        hours: {
-          monday: {
-            openTime: "08:00",
-            closeTime: "15:30",
-          },
-        },
-        phoneNumber: "405-555-4019",
-        emailAddress: "me@mysite.com",
-        social: {
-          facebook: "",
-          instagram: "",
-        },
-        options: {
-          curbsidePickup: true,
-        },
-        notes: "",
-      }}
+      initialValues={props.place || {}}
       onSubmit={async (values, { setSubmitting }) => {
         const latLong = values.coordinates;
         if (!latLong || !latLong.lat || !latLong.lng) {
@@ -38,21 +18,20 @@ function _PlaceForm() {
             debugger;
           }
         }
-        const response = await fetch("api/place", {
-          method: "POST",
+
+        const user = await authService.getUser();
+        values.ownerId = user.sid;
+
+        const response = await fetch("api/myplace", {
+          method: props.place ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json;charset=utf-8",
           },
           body: JSON.stringify(values),
         });
 
-        await response.json();
-
         setSubmitting(false);
-        // setTimeout(() => {
-        //   alert(JSON.stringify(values, null, 2));
-        //   setSubmitting(false);
-        // }, 500);
+        props.onSubmit();
       }}
       render={() => (
         <Form className={styles.form}>
@@ -192,6 +171,29 @@ function _PlaceForm() {
     />
   );
 }
+
+const initialValues = {
+  name: "Khaoula's Store",
+  type: "groceryStore",
+  address: "13700 NE 99TH ST, Issaquah, WA 99401",
+  coordinates: {},
+  hours: {
+    monday: {
+      openTime: "08:00",
+      closeTime: "15:30",
+    },
+  },
+  phoneNumber: "405-555-4019",
+  emailAddress: "me@mysite.com",
+  social: {
+    facebook: "",
+    instagram: "",
+  },
+  options: {
+    curbsidePickup: true,
+  },
+  notes: "",
+};
 
 const styles = mergeStyleSets({
   form: {

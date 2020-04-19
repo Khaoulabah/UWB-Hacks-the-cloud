@@ -3,17 +3,23 @@ import { Dropdown, mergeStyleSets, SearchBox } from "@fluentui/react";
 
 const PlaceTypes = [
   { key: "all", text: "All", selected: true },
-  { key: "grocery", text: "Grocery store" },
+  { key: "groceryStore", text: "Grocery store" },
   { key: "pharmacy", text: "Pharmacy" },
-  { key: "doctor", text: "Doctor's Office" },
+  { key: "doctorOffice", text: "Doctor's Office" },
   { key: "restaurant", text: "Restaurant" },
 ];
 
-export default function SearchAndFilter() {
+export default function SearchAndFilter(props) {
   return (
     <div className={styles.root}>
       <SearchBox placeholder="Search"></SearchBox>
-      <Dropdown options={PlaceTypes} className={styles.dropdown}></Dropdown>
+      <Dropdown
+        options={PlaceTypes}
+        className={styles.dropdown}
+        onChange={(ev, option) => {
+          props.onFilterChanged(option.key);
+        }}
+      ></Dropdown>
     </div>
   );
 }

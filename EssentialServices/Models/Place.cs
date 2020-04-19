@@ -12,6 +12,9 @@ namespace EssentialServices.Models
         [BsonId(IdGenerator = typeof(CombGuidGenerator))]
         public Guid Id { get; set; }
 
+        public string OwnerId { get; set; }
+
+
         [BsonElement("Name")]
         public string Name { get; set; }
 

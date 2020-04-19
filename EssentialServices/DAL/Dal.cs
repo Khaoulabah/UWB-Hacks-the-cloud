@@ -47,6 +47,38 @@ namespace EssentialServices
             }
         }
 
+        // Gets all Place items filtered by type from the MongoDB server.        
+        public List<Place> GetAllPlacesByType(string type)
+        {
+            try
+            {
+                var collection = GetPlacesCollection();
+                var filter = Builders<Place>.Filter.Eq("Type", type);
+                var result = collection.Find(filter).ToList();
+                return result;
+            }
+            catch (MongoConnectionException)
+            {
+                return new List<Place>();
+            }
+        }
+
+        // Gets all Place items filtered by type from the MongoDB server.        
+        public List<Place> GetAllPlacesByOwner(string ownerId)
+        {
+            try
+            {
+                var collection = GetPlacesCollection();
+                var filter = Builders<Place>.Filter.Eq("OwnerId", ownerId);
+                var result = collection.Find(filter).ToList();
+                return result;
+            }
+            catch (MongoConnectionException)
+            {
+                return new List<Place>();
+            }
+        }
+
         // Creates a Place and inserts it into the collection in MongoDB.
         public void CreatePlace(Place place)
         {
@@ -54,6 +86,31 @@ namespace EssentialServices
             try
             {
                 collection.InsertOne(place);
+            }
+            catch (MongoCommandException ex)
+            {
+                string msg = ex.Message;
+            }
+        }
+        public void UpdatePlace(Place place)
+        {
+            var collection = GetPlacesCollectionForEdit();
+            try
+            {
+                collection.ReplaceOne(Builders<Place>.Filter.Eq("Id", place.Id), place);
+            }
+            catch (MongoCommandException ex)
+            {
+                string msg = ex.Message;
+            }
+        }
+
+        public void DeletePlace(Guid placeId)
+        {
+            var collection = GetPlacesCollectionForEdit();
+            try
+            {
+                collection.DeleteOne(Builders<Place>.Filter.Eq("Id", placeId));
             }
             catch (MongoCommandException ex)
             {

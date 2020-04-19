@@ -9,6 +9,7 @@ import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 import { PlaceForm } from "./components/PlaceForm";
 import "./custom.css";
+import MyPlaces from "./components/MyPlaces";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -17,6 +18,7 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path="/" component={Home} />
+        <AuthorizeRoute exact path="/myplaces" component={MyPlaces} />
         <Route path="/counter" component={Counter} />
         <Route exact path="/add" component={PlaceForm} />
         <Route path="/counter" component={Counter} />

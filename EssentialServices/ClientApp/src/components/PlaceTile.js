@@ -37,6 +37,7 @@ export function PlaceTile(props) {
 const theme = getTheme();
 const styles = mergeStyleSets({
   root: {
+    flex: "auto",
     padding: 8,
     borderBottom: `1px solid ${theme.palette.neutralTertiaryAlt}`,
     cursor: "pointer",

@@ -26,18 +26,11 @@ namespace EssentialServices.Controllers
             return dal.GetAllPlaces();
         }
 
-        // GET: api/Place/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET: api/Place/groceryStore
+        [HttpGet("{type}", Name = "Get")]
+        public IEnumerable<Place> Get(string type)
         {
-            return "value";
-        }
-
-        // POST: api/Place
-        [HttpPost]
-        public void Post([FromBody] Place place)
-        {
-            dal.CreatePlace(place);
+            return dal.GetAllPlacesByType(type);
         }
 
         // PUT: api/Place/5
